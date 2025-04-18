@@ -1,7 +1,11 @@
 from vex import Brain
 class Box:
     def __init__(self, tl: tuple, br: tuple, brain: Brain) -> None:
-        
+        """
+        tl is the top left corner
+        br is the bottom right corner
+        text is contents of the box
+        """
         self.tlx,self.tly = tl
         self.brx, self.bry = br
         self.brain = brain

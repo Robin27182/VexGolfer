@@ -7,6 +7,7 @@ class GolfInfo:
         self.ramp_ang = angle
 
     def get_ramp_setter(self, angle: float) -> function:
+        """Needed to pass a setter into selectable boxes for a specific value. This does that."""
         def set_ramp(self):
             self.ramp_ang = angle
         return set_ramp
@@ -15,6 +16,7 @@ class GolfInfo:
         self.club_speed = speed
 
     def get_club_setter(self, speed: float) -> function:
+        """Needed to pass a setter into selectable boxes for a specific value. This does that."""
         def set_club(self):
             self.club_speed = speed
         return set_club

@@ -7,5 +7,5 @@ class UpdTextBox(Box):
         self.text = getTextFun()
         super().__draw_box(Color.WHITE)
     
-    def update(self):
+    def update(self) -> None:
         self.text = self.getTextFun()
