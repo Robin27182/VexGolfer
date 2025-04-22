@@ -10,23 +10,23 @@
 # Library imports
 from vex import *
 from GolfInfo import GolfInfo
-from BrainUI import BrainUI
+from Grid import Grid
 
 brain = Brain()
 golf_info = GolfInfo()
-brain_UI = BrainUI(brain)
+grid = Grid(brain, 6, 4)
 
-brain_UI.add_text_box("club", (1, 1), (80, 40), "Club Settings:")
-brain_UI.add_select_box("club_1", (80, 1), (120, 40), "1", golf_info.get_club_setter(.25))
-brain_UI.add_select_box("club_2", (120, 1), (160, 40), "2", golf_info.get_club_setter(.50))
-brain_UI.add_select_box("club_3", (160, 1), (200, 40), "3", golf_info.get_club_setter(.75))
-brain_UI.add_select_box("club_4", (200, 1), (240, 40), "4", golf_info.get_club_setter(1.0))
+grid.add_box("club", (0,0), (2,1), "Club Settings")
+grid.add_box("club_1", (1,0), (3,1), "1", None, golf_info.get_club_setter(0.25))
+grid.add_box("club_2", (2,0), (4,1), "1", None, golf_info.get_club_setter(0.50))
+grid.add_box("club_3", (3,0), (5,1), "1", None, golf_info.get_club_setter(0.75))
+grid.add_box("club_4", (4,0), (6,1), "1", None, golf_info.get_club_setter(1.00))
 
-brain_UI.add_text_box("ramp", (1, 40), (80, 80), "Ramp Settings:")
-brain_UI.add_select_box("ramp_1", (80, 40), (120, 80), "1", golf_info.get_ramp_setter(15))
-brain_UI.add_select_box("ramp_2", (120, 40), (160, 80), "2", golf_info.get_ramp_setter(30))
-brain_UI.add_select_box("ramp_3", (160, 40), (200, 80), "3", golf_info.get_ramp_setter(45))
-brain_UI.add_select_box("ramp_4", (200, 40), (240, 80), "4", golf_info.get_ramp_setter(60))
+grid.add_box("ramp", (0, 1), (2, 2), "Ramp Settings:")
+grid.add_box("ramp_1", (1, 1), (3, 2), "1", None, golf_info.get_ramp_setter(15))
+grid.add_box("ramp_2", (2, 1), (4, 2), "2", None, golf_info.get_ramp_setter(30))
+grid.add_box("ramp_3", (3, 1), (5, 2), "3", None, golf_info.get_ramp_setter(45))
+grid.add_box("ramp_4", (4, 1), (6, 2), "4", None, golf_info.get_ramp_setter(60))
 
-brain_UI.add_text_box("stop", (1, 80), (80, 160), "Stop")
-brain_UI.add_upd_text_box("display", (80, 1), (160, 160), golf_info.to_string())
+grid.add_box("stop", (0,2), (3, 4), "stop")
+grid.add_box("display", (2, 2), (6, 4), golf_info.to_string(), golf_info.to_string)
