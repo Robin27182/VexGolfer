@@ -1,0 +1,45 @@
+from vex import Brain
+from Grid import Grid
+
+class BrainUI:
+    def __init__(self, brain: Brain, user_grid_x: int = 6, user_grid_y: int = 4) -> None:
+        self.brain = brain
+        self.user_grid = Grid(brain, user_grid_x, user_grid_y)
+        self.preset_grid = Grid(brain, 1, 1)
+        self.preset_result = None
+
+    def get_result_setter(self, result):
+        def set_result():
+            self.preset_result = result
+        return set_result
+
+    def use_keypad_preset(self, obj_setter, end_on_confirm = False) -> None:
+        self.preset_result = ""
+        self.user_grid.set_activation(False)
+        preset = Grid(self.brain, 6, 4)
+
+        preset.add_box("7", (0,0), (1,1), "7", None, self.get_result_setter(self.preset_result + "7"))
+        preset.add_box("8", (1,0), (2,1), "8", None, self.get_result_setter(self.preset_result + "8"))
+        preset.add_box("9", (2,0), (3,1), "9", None, self.get_result_setter(self.preset_result + "9"))
+        
+        preset.add_box("4", (0,1), (1,2), "4", None, self.get_result_setter(self.preset_result + "4"))
+        preset.add_box("5", (1,1), (2,2), "5", None, self.get_result_setter(self.preset_result + "5"))
+        preset.add_box("6", (2,1), (3,2), "6", None, self.get_result_setter(self.preset_result + "6"))
+        
+        preset.add_box("1", (0,2), (1,3), "1", None, self.get_result_setter(self.preset_result + "1"))
+        preset.add_box("2", (1,2), (2,3), "2", None, self.get_result_setter(self.preset_result + "2"))
+        preset.add_box("3", (2,2), (3,3), "3", None, self.get_result_setter(self.preset_result + "3"))
+        
+        preset.add_box("0", (0,3), (1,4), "0", None, self.get_result_setter(self.preset_result + "0"))
+        preset.add_box(".", (1,3), (2,4), ".", None, self.get_result_setter(self.preset_result + "."))
+        preset.add_box("del", (2,3), (3,4), "del", None, self.get_result_setter(self.preset_result[:(len(self.preset_result)-1)]))
+
+        def set_user_obj(result):
+            obj_setter(result)
+            if end_on_confirm:
+                self.preset_grid.set_activation(False)
+                self.user_grid.set_activation(True)
+
+        preset.add_box("confirm", (0,3), (6,3), "confirm", None, set_user_obj(self.preset_result))
+
+        self.preset_grid = preset

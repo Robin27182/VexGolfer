@@ -1,10 +1,10 @@
-from vex import *
+from vex import Brain
 from ActionBox import ActionBox
-
 
 class Grid:
     def __init__(self, brain: Brain, x_cells: int, y_cells: int) -> None:
         self.brain = brain
+        self.brain.screen.pressed(self.update_all)
 
         self.res_x = 480
         self.res_y = 272
@@ -13,15 +13,15 @@ class Grid:
         self.box_y = self.res_y / y_cells
 
         self.action_boxes = {}
-        self.preset_boxes = {}
 
     def update_all(self):
-        for box in self.action_boxes.values():
+        for box in list(self.action_boxes.values()) * 2:
             box.update()
 
-        for box in self.preset_boxes.values():
-            box.update()
-        
+    def set_activation(self, active: bool) -> None:
+        for box in list(self.action_boxes.values()) * 2:
+            box.set_active(active)
+       
     def add_box(self, name: str, tl: tuple, br: tuple, text: str, get_text_fun = None, on_press = None) -> None:
         tl_conv = (tl[0] * self.box_x, tl[1] * self.box_y)
         br_conv = (br[0] * self.box_x, br[1] * self.box_y)
@@ -32,4 +32,3 @@ class Grid:
 
     def delete_preset(self):
         self.preset_boxes = {}
-
